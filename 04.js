@@ -1,29 +1,29 @@
 const numeros = [1, 2, 3];
 
-numeros.forEach(function(numero) {
-  console.log(numero);
+numeros.forEach(function (numero) {
+  console.log("foreach function", numero);
 });
 
 numeros.forEach((numero) => {
-  console.log(numero);
+  console.log("arrow function", numero);
 });
 
 const dobles = numeros.map((numero) => {
   return numero * 2;
 });
 
-// console.log(dobles);
+console.log("dobles", dobles);
 
 const pares = numeros.filter((numero) => {
   return numero % 2 === 0;
 });
 
-// console.log(pares);
+console.log("pares", pares);
 
 // Callback Sincrono
 
 console.log("antes");
-[1,2,3].forEach(n => console.log(n));
+[1, 2, 3].forEach((n) => console.log(n));
 console.log("despues");
 
 // Callback Asincrono
@@ -32,8 +32,7 @@ console.log("antes");
 setTimeout(() => console.log("despues"), 0);
 console.log("entre");
 
-
-// Ejemplos 
+// Ejemplos
 
 // setTimeout: ejecuta el callback después de N milisegundos
 setTimeout(() => {

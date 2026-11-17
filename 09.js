@@ -1,31 +1,34 @@
 // Manejo de errores en fetch
 fetch("https://api-que-no-existe.com/datos")
-  .then(response => response.json())
-  .then(products => console.log(products))
-  .catch(error => console.error("Error:", error.message));
+  .then((response) => response.json())
+  .then((products) => console.log(products))
+  .catch((error) => console.error("Error:", error.message));
+
+fetch("https://api-que-no-existe.com/datos")
+  .then((response) => response.json())
+  .then((products) => console.log(products));
 
 // Dónde cae el error importa
 
 fetch("https://excuser-three.vercel.app/v1/excuse/developers/")
-  .then(response => response.json()) 
-  .then(data => {
+  .then((response) => response.json())
+  .then((data) => {
     console.log("Excusa:", data[0].excuse);
     throw new Error("fallo tras obtener la excusa"); // 👈 error forzado
   })
-  .then(() => console.log("Este .then() se SALTA")) 
-  .catch(error => {
+  .then(() => console.log("Este .then() se SALTA"))
+  .catch((error) => {
     console.error("Capturado:", error.message);
-    return "La cadena continúa después del catch"; 
+    return "La cadena continúa después del catch";
   })
-  .then(valor => console.log("Recuperado:", valor));
-
+  .then((valor) => console.log("Recuperado:", valor));
 
 // Ejemplo de Finally
-
+let cargando = true;
 fetch("https://excuser-three.vercel.app/v1/excuse/developers1/")
-  .then(respuesta => respuesta.json())
-  .then(data => console.log("Excusa:", data[0].excuse))
-  .catch(error => console.error("Error:", error.message))
+  .then((respuesta) => respuesta.json())
+  .then((data) => console.log("Excusa:", data[0].excuse))
+  .catch((error) => console.error("Error:", error.message))
   .finally(() => {
     cargando = false; // Siempre se ejecuta
     console.log("Cargando:", cargando); // false — tanto si hubo error como si no
@@ -33,15 +36,31 @@ fetch("https://excuser-three.vercel.app/v1/excuse/developers1/")
 
 // Cadena completa con buenas prácticas
 
+const mostrarSpinner = () => {
+  console.log("cargando...");
+};
+const ocultarSpinner = () => {
+  console.log("descargando...");
+};
+
+const mostrarMensajeError = (mensaje) => {
+  console.error("Error:", mensaje);
+};
+const renderizarExcusa = (excusa) => {
+  console.log("Excusa:", excusa);
+};
+
 function cargarExcusa() {
   mostrarSpinner();
 
   fetch("https://excuser-three.vercel.app/v1/excuse/developers/")
-    .then(res => {
+    .then((res) => {
       if (!res.ok) throw new Error(`Error ${res.status}`);
       return res.json();
     })
-    .then(data => renderizarExcusa(data[0].excuse))
-    .catch(error => mostrarMensajeError(error.message))
+    .then((data) => renderizarExcusa(data[0].excuse))
+    .catch((error) => mostrarMensajeError(error.message))
     .finally(() => ocultarSpinner());
 }
+
+cargarExcusa();

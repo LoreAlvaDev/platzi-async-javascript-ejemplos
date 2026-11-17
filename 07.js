@@ -1,17 +1,23 @@
+console.log(`Primer ejemplo
+  ----------------------------------`);
 const miPromesa = new Promise((resolve, reject) => {
-    setTimeout(() => {
-        const exito = true;
-        if (exito) {
-            resolve("La operación fue exitosa");
-        } else {
-            reject("La operación falló");
-        }
-    }, 2000);
-})
+  setTimeout(() => {
+    const exito = true;
+    if (exito) {
+      resolve("La operación fue exitosa");
+    } else {
+      reject("La operación falló");
+    }
+  }, 2000);
+});
 
-// console.log(miPromesa);
+console.log(miPromesa);
 
 // Los estados de las promesas son inmutables
+console.log(`
+  ----------------------------------
+  Segundo ejemplo
+  ----------------------------------`);
 
 const promesaResuelta = new Promise((resolve, reject) => {
   resolve("primer valor");
@@ -19,10 +25,13 @@ const promesaResuelta = new Promise((resolve, reject) => {
   reject(new Error("error")); // Ignorado — ya estaba fulfilled
 });
 
-//promesaResuelta.then(valor => console.log(valor)); // "primer valor"
-
+promesaResuelta.then((valor) => console.log(valor)); // "primer valor"
 
 // Consumir valores de una promesa con .then() y a
+console.log(`
+  ----------------------------------
+  Tercer ejemplo
+  ----------------------------------`);
 
 function obtenerNombre(data) {
   return new Promise((resolve, reject) => {
@@ -38,24 +47,36 @@ function obtenerNombre(data) {
 
 // Cambia true por false para ver el otro comportamiento
 obtenerNombre(false)
-  .then(nombre => {
+  .then((nombre) => {
     console.log("Hola,", nombre);
   })
-  .catch(error => {
+  .catch((error) => {
     console.error("Error:", error.message);
   });
 
+obtenerNombre(true)
+  .then((nombre) => {
+    console.log("Hola,", nombre);
+  })
+  .catch((error) => {
+    console.error("Error:", error.message);
+  });
 
 // Aplicación real, llamando API Colombia
+console.log(`
+  ----------------------------------
+  Cuarto ejemplo
+  ----------------------------------`);
 
 fetch("https://api-colombia.com/api/v1/Department")
   .then((res) => res.json())
   .then((departments) => {
-    console.log("Primer departamento:", departments[35].name);
+    console.log("Primer departamento:", departments[0].name);
 
     departments.forEach((dep) => {
       console.log(`${dep.name}: ${dep.population}`);
     });
+    console.log("35 departamento:", departments[35].name);
   })
   .catch((error) => {
     console.error("Error consultando API Colombia:", error);
